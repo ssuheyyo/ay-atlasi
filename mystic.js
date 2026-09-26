@@ -35,7 +35,7 @@ const deck = [
 const majorArt=['Fool','Magician','High_Priestess','Empress','Emperor','Hierophant','Lovers','Chariot','Strength','Hermit','Wheel_of_Fortune','Justice','Hanged_Man','Death','Temperance','Devil','Tower','Star','Moon','Sun','Judgement','World'];
 const suitArt=['Wands','Cups','Swords','Pents'];
 for(const card of deck){const majorMatch=/^M(\d+)$/.exec(card.id);if(majorMatch){const n=Number(majorMatch[1]);card.image=`./tarot-art/${String(n).padStart(2,'0')}_${majorArt[n]}.jpg`}else{const minorMatch=/^S(\d+)-(\d+)$/.exec(card.id);card.image=`./tarot-art/${suitArt[Number(minorMatch[1])]}${String(Number(minorMatch[2])+1).padStart(2,'0')}.jpg`}}
-const mystic = { mode:'classic', stage:'ready', question:'', spread:[], selected:[], revealed:false, cityResults:[], location:null, chart:null, transitDate:today(), calculator:'venus' };
+const mystic = { mode:'classic', stage:'ready', question:'', note:'', spread:[], selected:[], revealed:false, cityResults:[], location:null, chart:null, transitDate:today(), calculator:'venus' };
 const norm = n => ((n % 360) + 360) % 360;
 const signIndex = n => Math.floor(norm(n)/30);
 const signText = n => {const i=signIndex(n);return `${signs[i][1]} ${signs[i][0]} ${Math.floor(norm(n)%30)}°${String(Math.floor((norm(n)%1)*60)).padStart(2,'0')}′`};
@@ -134,7 +134,7 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-taro
   if(b.dataset.ritual==='stop'){const ids=deck.map(x=>x.id);for(let i=ids.length-1;i>0;i--){const buf=new Uint32Array(1);crypto.getRandomValues(buf);const j=buf[0]%(i+1);[ids[i],ids[j]]=[ids[j],ids[i]]}mystic.spread=ids;mystic.stage='stopped';render();return}
   if(b.hasAttribute('data-tarot-draw')){if(mystic.stage!=='stopped')return;const index=Number(b.dataset.tarotDraw),id=mystic.spread[index];if(!id||mystic.selected.includes(id))return;mystic.selected.push(id);b.classList.add('chosen');b.disabled=true;const slot=$$('.reading-slot')[mystic.selected.length-1];slot.querySelector('.tarot-card').outerHTML=`<div class="tarot-card has-card">${cardBack()}</div>`;if(mystic.selected.length===3){mystic.stage='picked';setTimeout(render,450)}return}
   if(b.dataset.ritual==='reveal'){mystic.revealed=true;mystic.stage='revealed';render();return}
-  if(b.dataset.ritual==='reset'){mystic.stage='ready';mystic.selected=[];mystic.revealed=false;mystic.spread=[];render();return}
+  if(b.dataset.ritual==='reset'){mystic.stage='ready';mystic.selected=[];mystic.revealed=false;mystic.spread=[];mystic.note='';render();return}
   if(b.dataset.ritual==='save'){await save('tarot_reading',{mode:mystic.mode,question:mystic.question.trim(),cards:mystic.selected,note:mystic.note||'',date:today()});toast('Okuma defterine kaydedildi ✦');return}
   if(b.dataset.city){const x=mystic.cityResults[Number(b.dataset.city)];if(!x)return;const form=$('#birthForm');form.elements.city.value=`${x.name}, ${x.country||''}`;form.elements.latitude.value=x.latitude;form.elements.longitude.value=x.longitude;form.elements.timezone.value=x.timezone||'UTC';mystic.location={city:form.elements.city.value,latitude:x.latitude,longitude:x.longitude,timezone:x.timezone};$('#cityResults').innerHTML='';return}
   if(b.dataset.calc){mystic.calculator=b.dataset.calc;render();return}
