@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ssuheyyo.github.io/ay-atlasi/sitemap.xml

@@ -3,22 +3,32 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ay Atlası</title>
+  <title>Ay Atlası — Tarot, Doğum Haritası ve Güncel Gökyüzü</title>
+  <meta name="description" content="Ay Atlası: 78 özgün Rider–Waite–Smith kartıyla tarot, kişisel doğum haritası, güncel gezegen konumları, Ay takvimi ve astroloji hesapları. Ücretsiz keşfet.">
+  <meta name="theme-color" content="#1b0e1e">
+  <link rel="canonical" href="https://ssuheyyo.github.io/ay-atlasi/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Ay Atlası — Tarot ve Astroloji">
+  <meta property="og:description" content="Kartların hikâyesini ve doğduğun anın göğünü keşfet.">
+  <meta property="og:url" content="https://ssuheyyo.github.io/ay-atlasi/">
+  <meta property="og:image" content="https://ssuheyyo.github.io/ay-atlasi/landscape-red-hd.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Ay Atlası","url":"https://ssuheyyo.github.io/ay-atlasi/","inLanguage":"tr","applicationCategory":"LifestyleApplication","isAccessibleForFree":true,"description":"Ücretsiz tarot ve astroloji web uygulaması: tarot kartları, doğum haritası, Ay takvimi ve güncel gezegenler."}</script>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
 </head>
-<body data-theme="red">
+<body data-theme="blue">
   <div id="app" class="app-shell">
     <aside class="sidebar">
-      <div class="brand"><div class="brand-icon"><img src="./icon.svg" alt=""></div><div><div class="brand-title pixel-title">ay<br>atlası</div><div class="brand-caption">KARTLAR • YILDIZLAR • GÜNLER</div></div></div>
+      <div class="brand"><div class="brand-icon"><img src="./icon.svg" alt=""></div><div><div class="brand-title pixel-title">ay<br>atlası</div><div class="brand-caption">TAROT • ASTROLOJİ</div></div></div>
       <div class="sidebar-divider"></div>
-      <div class="sidebar-label">KEŞİF & DEFTER</div>
+      <div class="sidebar-label">EVRENİNİ KEŞFET</div>
       <nav id="nav" aria-label="Ana menü"></nav>
-      <div class="sidebar-bottom"><div class="pixel-scene" aria-hidden="true"><div class="scene-sun"></div><div class="scene-cloud c1"></div><div class="scene-cloud c2"></div><div class="scene-hill h1"></div><div class="scene-hill h2"></div><div class="scene-flower">✿</div></div><div class="scene-quote">bugün de kendi hızında 🌷</div><button id="settingsBtn" class="nav-item settings-nav">⚙ <span>Ayarlar</span></button></div>
+      <div class="sidebar-bottom"><div class="pixel-scene" aria-hidden="true"></div><div class="scene-quote">As above, so below ✦</div><button id="settingsBtn" class="nav-item settings-nav">⚙ <span>Ayarlar</span></button></div>
     </aside>
     <main class="main">
-      <div class="ambient-scene" aria-hidden="true"><div class="ambient-image"></div><div id="leafLayer" class="leaf-layer"></div></div>
-      <header class="topbar"><div class="top-left"><span class="window-dots"><i></i><i></i><i></i></span><span id="breadcrumb">Günüm</span></div><div class="top-actions"><div id="todayPill" class="today-pill"></div><button id="themeBtn" class="soft-btn theme-toggle" title="Tema değiştir">✿ Tema değiştir</button><button id="searchBtn" class="icon-btn" title="Ara (Ctrl+K)">⌕</button><button id="quickAdd" class="primary-btn">＋ Yeni ekle</button></div></header>
+      <div class="ambient-scene" aria-hidden="true"><div class="ambient-image"></div><div class="star-layer"></div><canvas id="starCanvas"></canvas></div>
+      <header class="topbar"><div class="top-left"><span class="window-dots"><i></i><i></i><i></i></span><span id="breadcrumb">Keşif</span></div><div class="top-actions"><div id="todayPill" class="today-pill"></div><button id="themeBtn" class="soft-btn theme-toggle" title="Gök paletini değiştir">◐ Gök paleti</button></div></header>
       <section id="content" class="content"></section>
       <div id="toast" class="toast" role="status"></div>
     </main>
@@ -28,5 +38,7 @@
   <script src="./storage.js"></script>
   <script src="./app.js"></script>
   <script src="./mystic.js"></script>
+  <script src="./features.js"></script>
+  <script src="./stars.js"></script>
 </body>
 </html>

@@ -1,40 +1,44 @@
-# Ay Atlası ✧
+# Ay Atlası ✦
 
-Piksel Defter'in pastel ve piksel manzaralı arayüzünden uyarlanmış, Türkçe tarot, astroloji ve planlayıcı web uygulaması.
+Tarot ve astroloji için Türkçe, tarayıcıda çalışan bir web uygulaması. Görsel çerçevesi kullanıcının Piksel Defter projesindeki manzara temalarından uyarlanmıştır. Planlayıcı özellikleri bu uygulamada yer almaz.
 
-## Neler var?
+## Canlı site
 
-- **Planlayıcı:** Günlük sayfa, haftalık ve aylık takvim, görevler, alışkanlıklar, notlar, odak sayacı, çizim alanı ve üç manzara teması. Kaynak uygulamanın düzeni korunmuştur.
-- **Tarot:** 78 kartlık deste; soru alanı; animasyonlu karıştırma; “karmayı durdur”; üç kart seçimi; açılma animasyonu; geçmiş/şimdi/olasılık dizilimi. Klasik modda düz kart anlamları görünür. Yorumcu masasında hazır anlamlar gizlidir. Okumalar deftere kaydedilebilir.
-- **Güncel gökyüzü:** Seçilen günün Güneş, Ay ve sekiz gezegen konumu, Ay evresi ve aydınlık yüzdesi; kişisel harita varsa yakın transit açıları.
-- **Doğum haritası:** Yerel doğum tarihi, saati, yer koordinatı ve saat dilimiyle hesaplanan Güneş, Ay, gezegenler, yükselen, MC ve 12 tam burç evi. Venüs, yükselen, Ay, Mars, MC ve doğum Ay evresi için hızlı hesaplayıcılar.
-- **Yedek:** JSON dışa/içe aktarma; eski Piksel Defter yedeklerindeki planlayıcı verilerini içe alma.
+https://ssuheyyo.github.io/ay-atlasi/
 
-## Yerelde açma
+Siteyi kullanmak için GitHub hesabı, giriş veya bilgisayarınızda açık bir sunucu gerekmez. GitHub Pages üzerinde yayımlanır.
 
-Bu sürüm statik dosyalardan oluşur; kurulum veya uygulama sunucusu gerekmez. Bu klasörde bir statik sunucu açın:
+## Bölümler
 
-```bash
-python -m http.server 8765
-```
+- Tarot: Gerçek 1909 Rider–Waite–Smith destesinin 78 kart görseli, soru alanı, animasyonlu karıştırma, karmayı durdurma, üç kart seçme ve çevirme.
+- Klasik okuma: Kartlar açılınca Türkçe düz kart anlamları gösterilir.
+- Yorumcu masası: Kart resimleri ve adları görünür, hazır anlamlar gizlidir.
+- Kart Atlası: 78 özgün kartı arama, gruba göre süzme ve ayrıntılı inceleme.
+- Günün kartı: Her gün bir kart seçme; kullanıcı adıyla kişisel karşılama.
+- Gökyüzü: Seçilen gündeki Güneş, Ay ve gezegen konumları, Ay evresi, güncel açılar, geri hareketler ve doğum haritası varsa yakın transitler.
+- Ay takvimi: Yaklaşık Ay evresi, aydınlanma oranı ve Ay burcuyla 30 günlük görünüm.
+- Doğum haritası: Tarih, yerel saat, doğum yeri, koordinatlar ve saat dilimiyle gezegenler, yükselen, MC, 12 tam burç evi ve başlıca açılar.
+- Astro hesaplar: Güneş, Ay, yükselen, Merkür, Venüs, Mars, Jüpiter, Satürn, MC ve doğum Ay evresi.
+- Uyum haritası: İki kişinin seçili gezegenleri arasındaki ana açılar.
+- Okumalar: Tarot açılımlarını kişisel notlarla tarayıcıda saklama; JSON yedek alma ve geri yükleme.
+- Görünüm: Üç renk paleti, animasyon ve yıldız yoğunluğu ayarları.
 
-Ardından `http://127.0.0.1:8765/` adresine gidin. `file://` yerine HTTP kullanılması tarayıcı depolaması ve şehir aramasının tutarlı çalışması için önerilir.
+## Veri ve hesaplama
 
-## GitHub Pages ile ücretsiz yayın
+Astronomik konumlar tarayıcıda Astronomy Engine ile hesaplanır. Tropikal zodyak ve tam burç ev sistemi kullanılır. Doğum yeri araması Open-Meteo geocoding servisini kullanır; konumu elle girme seçeneği vardır. Astrolojik ve tarot yorumları keşif amaçlıdır.
 
-1. GitHub'da herkese açık yeni bir depo oluşturun.
-2. Bu klasördeki dosyaları **deponun köküne** yükleyin. `index.html`, `app.js`, `mystic.js`, `storage.js`, `style.css`, `astronomy.browser.min.js`, `icon.svg` ve üç `landscape-*.png` dosyasının hepsi gereklidir.
-3. Depo **Settings → Pages → Build and deployment** bölümünde **Deploy from a branch**, dal olarak `main`, klasör olarak `/(root)` seçin.
-4. GitHub'ın verdiği `https://KULLANICI.github.io/DEPO/` adresini açın.
+Kaydedilen doğum bilgileri ve tarot okumaları yalnızca açılan tarayıcının localStorage alanında tutulur. Hesap açma veya cihazlar arası eşitleme yoktur. Tarayıcı verilerini silmeden önce Ayarlar bölümünden yedek indirin.
 
-Statik site için 7/24 çalışan kendi bilgisayarınız gerekmez. GitHub Pages kesintisiz erişim hedefler ama mutlak çalışma garantisi vermez. Sunucu tarafı kayıt, kullanıcı hesabı veya cihazlar arası eşitleme bu ücretsiz statik yapıda yoktur. Veriler **yalnızca açtığınız tarayıcının localStorage alanında** saklanır; tarayıcı verileri temizlenirse yedek alınmamış kayıtlar kaybolur. GitHub deposu kişisel kayıtları tutmaz. Şehir arama kutusuna yazılan yer adı Open-Meteo geocoding API'sine gönderilir; koordinatları elle girerek bu aramayı kullanmayabilirsiniz.
+## Görsel kaynaklar
 
-## Astroloji hesaplarının kapsamı
+Kart resimleri Pamela Colman Smith'in Arthur Edward Waite yönlendirmesiyle çizdiği, 1909'da yayımlanan özgün Rider–Waite–Smith destesinin taramalarıdır. Dosyalar [TarotCards açık koleksiyonunun 720px dizininden](https://github.com/mixvlad/TarotCards/tree/main/tarot/rider-waite/720px) alınmıştır. Koleksiyonun [kaynak metaverisi](https://github.com/mixvlad/TarotCards/blob/main/tarot/rider-waite/metadata.json) bu taramaları kamu malı olarak tanımlar. Modern yeniden renklendirilmiş sürümler kullanılmamıştır.
 
-Astronomik gezegen boylamları MIT lisanslı [Astronomy Engine](https://github.com/cosinekitty/astronomy) 2.1.19 ile tarayıcıda hesaplanır. Batı astrolojisi için **tropikal zodyak** ve **tam burç ev sistemi** kullanılır. Yükselen, yerel yıldız zamanından doğu ufkunun ekliptikle kesişimiyle hesaplanır. Yerel doğum saati IANA saat dilimiyle UTC'ye çevrilir. Eski tarihli saat dilimi kayıtları, yaz saati geçişleri ve bilinmeyen doğum saati özellikle yükselen/ev sonuçlarını etkileyebilir. Yorumlar keşif amaçlıdır, astronomik hesapların kendisiyle karıştırılmamalıdır.
+Piksel manzara görselleri kullanıcının Piksel Defter projesinden alınmıştır. Astronomy Engine: Don Cross, MIT lisansı; metin ASTRONOMY-LICENSE.txt dosyasındadır.
 
-## Kaynaklar ve haklar
+Cinzel Decorative ve DM Sans yazı tipleri SIL Open Font License kapsamındadır; lisans metinleri `fonts/` dizinindedir.
 
-- Arayüz düzeni ve manzara görselleri kullanıcının Piksel Defter projesinden alınmıştır.
-- Astronomy Engine: Don Cross, MIT lisansı; lisans metni `ASTRONOMY-LICENSE.txt` dosyasında.
-- Şehir araması: [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api).
+## Yerel önizleme
+
+Bu klasörde Python ile statik bir sunucu açın: python -m http.server 8765
+
+Ardından http://127.0.0.1:8765/ adresini açın.
