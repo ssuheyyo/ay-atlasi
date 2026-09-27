@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile, reload, getIdToken, signOut as firebaseSignOut } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile, reload, getIdToken, GoogleAuthProvider, linkWithPopup, unlink, signOut as firebaseSignOut } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
 import { getFirestore, collection, doc, getDocs, getDoc, setDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
 
 const config = window.AY_FIREBASE_CONFIG;
@@ -20,6 +20,12 @@ function message(error) {
     'auth/too-many-requests': 'Çok fazla deneme yapıldı. Bir süre sonra tekrar dene.',
     'auth/network-request-failed': 'İnternet bağlantısını kontrol et.',
     'auth/unauthorized-domain': 'Bu site Firebase yetkili alan adlarına eklenmemiş.',
+    'auth/popup-blocked': 'Tarayıcı Google penceresini engelledi. Açılır pencerelere izin verip tekrar dene.',
+    'auth/popup-closed-by-user': 'Google penceresi kapatıldı. İstersen yeniden deneyebilirsin.',
+    'auth/operation-not-allowed': 'Google ile doğrulama henüz etkin değil.',
+    'auth/credential-already-in-use': 'Bu Google hesabı başka bir Ay Atlası hesabına bağlı. Destek almadan hesapları birleştirme.',
+    'auth/account-exists-with-different-credential': 'Bu Google adresi farklı bir giriş yöntemiyle kayıtlı. Hesapları birleştirmeden önce destek al.',
+    'auth/provider-already-linked': 'Google hesabı zaten bağlı. Doğrulamayı yenile.',
     'permission-denied': 'Bulut erişimi reddedildi. E-postanı doğruladığından emin ol.',
     'unavailable': 'Bulut şu anda kullanılamıyor. Yerel kayıtların duruyor.'
   };
@@ -89,7 +95,33 @@ cloud.signup = async (email, password, name) => {
 };
 cloud.login = async (email, password) => { await signInWithEmailAndPassword(auth, email.trim(), password); };
 cloud.resetPassword = async email => { await sendPasswordResetEmail(auth, email.trim(), actionSettings); };
-cloud.resendVerification = async () => { if (!auth.currentUser) throw Error('Önce giriş yap.'); await sendEmailVerification(auth.currentUser, actionSettings); };
+let lastVerificationSent = 0;
+cloud.resendVerification = async () => {
+  if (!auth.currentUser) throw Error('Önce giriş yap.');
+  if (Date.now() - lastVerificationSent < 60_000) throw Error('Doğrulama isteği yeni gönderildi. Bir dakika sonra tekrar deneyebilirsin.');
+  await sendEmailVerification(auth.currentUser, actionSettings);
+  lastVerificationSent = Date.now();
+};
+cloud.verifyWithGoogle = async () => {
+  const current = auth?.currentUser;
+  if (!current?.email?.toLowerCase().endsWith('@gmail.com')) throw Error('Bu seçenek aynı Gmail adresiyle kullanılabilir.');
+  if (current.providerData.some(x => x.providerId === 'google.com')) {
+    await syncNow();
+    return;
+  }
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ login_hint: current.email, prompt: 'select_account' });
+  const result = await linkWithPopup(current, provider);
+  const linkedEmail = result.user.providerData.find(x => x.providerId === 'google.com')?.email;
+  if (linkedEmail?.toLowerCase() !== current.email.toLowerCase()) {
+    await unlink(result.user, 'google.com');
+    throw Error('Lütfen hesap açarken kullandığın Gmail adresini seç.');
+  }
+  await reload(result.user);
+  cloud.user = result.user;
+  if (!result.user.emailVerified) { update('verify'); throw Error('Google hesabı bağlandı; e-posta henüz doğrulanmış görünmüyor.'); }
+  await syncNow();
+};
 cloud.refreshVerification = async () => { if (!auth.currentUser) throw Error('Önce giriş yap.'); await syncNow(); };
 cloud.signOut = async () => { await firebaseSignOut(auth); activeUid = null; window.setAyStorageUser(null); cloud.user = null; update('guest'); };
 cloud.importGuest = async () => {
