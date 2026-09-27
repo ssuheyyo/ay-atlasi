@@ -22,7 +22,7 @@ Siteyi misafir olarak kullanmak için GitHub hesabı, giriş veya bilgisayarın�
 - Uyum haritası: İki kişinin seçili gezegenleri arasındaki ana açılar.
 - Okumalar: Tarot açılımlarını kişisel notlarla tarayıcıda saklama; JSON yedek alma ve geri yükleme.
 - Görünüm: Üç renk paleti, animasyon ve yıldız yoğunluğu ayarları.
-- Hesap: E-posta ve şifreyle kayıt, e-posta doğrulaması, giriş, şifre sıfırlama ve doğrulanmış hesaplar için cihazlar arası kayıt eşitleme. Gmail hesabında doğrulama iletisi ulaşmazsa aynı Google hesabını mevcut hesaba bağlama seçeneği bulunur.
+- Hesap: Google ile doğrudan giriş veya e-posta ve şifreyle kayıt, e-posta doğrulaması, şifre sıfırlama ve doğrulanmış hesaplar için cihazlar arası kayıt eşitleme. Gmail hesabında doğrulama iletisi ulaşmazsa aynı Google hesabını mevcut hesaba bağlama seçeneği bulunur.
 
 ## Veri ve hesaplama
 

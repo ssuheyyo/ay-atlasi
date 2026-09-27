@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile, reload, getIdToken, GoogleAuthProvider, linkWithPopup, unlink, signOut as firebaseSignOut } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, sendEmailVerification, sendPasswordResetEmail, updateProfile, reload, getIdToken, GoogleAuthProvider, linkWithPopup, unlink, signOut as firebaseSignOut } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js';
 import { getFirestore, collection, doc, getDocs, getDoc, setDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
 
 const config = window.AY_FIREBASE_CONFIG;
@@ -94,6 +94,13 @@ cloud.signup = async (email, password, name) => {
   cloud.user = result.user; update('verify');
 };
 cloud.login = async (email, password) => { await signInWithEmailAndPassword(auth, email.trim(), password); };
+cloud.loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  const result = await signInWithPopup(auth, provider);
+  cloud.user = result.user;
+  await syncNow();
+};
 cloud.resetPassword = async email => { await sendPasswordResetEmail(auth, email.trim(), actionSettings); };
 let lastVerificationSent = 0;
 cloud.resendVerification = async () => {
