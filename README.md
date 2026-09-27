@@ -6,7 +6,7 @@ Tarot ve astroloji için Türkçe, tarayıcıda çalışan bir web uygulaması. 
 
 https://ssuheyyo.github.io/ay-atlasi/
 
-Siteyi kullanmak için GitHub hesabı, giriş veya bilgisayarınızda açık bir sunucu gerekmez. GitHub Pages üzerinde yayımlanır.
+Siteyi misafir olarak kullanmak için GitHub hesabı, giriş veya bilgisayarınızda açık bir sunucu gerekmez. GitHub Pages üzerinde yayımlanır.
 
 ## Bölümler
 
@@ -22,12 +22,15 @@ Siteyi kullanmak için GitHub hesabı, giriş veya bilgisayarınızda açık bir
 - Uyum haritası: İki kişinin seçili gezegenleri arasındaki ana açılar.
 - Okumalar: Tarot açılımlarını kişisel notlarla tarayıcıda saklama; JSON yedek alma ve geri yükleme.
 - Görünüm: Üç renk paleti, animasyon ve yıldız yoğunluğu ayarları.
+- Hesap: E-posta ve şifreyle kayıt, e-posta doğrulaması, giriş, şifre sıfırlama ve doğrulanmış hesaplar için cihazlar arası kayıt eşitleme.
 
 ## Veri ve hesaplama
 
 Astronomik konumlar tarayıcıda Astronomy Engine ile hesaplanır. Tropikal zodyak ve tam burç ev sistemi kullanılır. Doğum yeri araması Open-Meteo geocoding servisini kullanır; konumu elle girme seçeneği vardır. Astrolojik ve tarot yorumları keşif amaçlıdır.
 
-Kaydedilen doğum bilgileri ve tarot okumaları yalnızca açılan tarayıcının localStorage alanında tutulur. Hesap açma veya cihazlar arası eşitleme yoktur. Tarayıcı verilerini silmeden önce Ayarlar bölümünden yedek indirin.
+Misafir kayıtları yalnızca açılan tarayıcının localStorage alanında tutulur. E-posta adresi doğrulanmış hesapların kayıtları Firebase Cloud Firestore'da kullanıcı kimliğine ayrılmış belgelerde saklanır ve kullanılan cihazda ayrıca yerel önbelleği bulunur. Misafir kayıtları kullanıcı açıkça “hesabıma aktar” demedikçe buluta gönderilmez. Şifreler uygulama kayıtlarında veya GitHub deposunda saklanmaz. Tarayıcı verilerini silmeden önce Ayarlar bölümünden yedek almak yine önerilir.
+
+Hesapların çalışması için Firebase Authentication'da e-posta/şifre yöntemi, Cloud Firestore ve `firestore.rules` dosyasındaki güvenlik kuralları etkin olmalıdır. GitHub Pages alan adı Firebase Authentication yetkili alan adlarına eklenmelidir. `firebase-config.js` içindeki web yapılandırması Firebase projesinin halka açık istemci kimliğidir; veri erişimi güvenlik kurallarıyla sınırlandırılır.
 
 ## Görsel kaynaklar
 
