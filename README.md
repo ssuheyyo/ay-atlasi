@@ -32,6 +32,8 @@ Misafir kayıtları yalnızca açılan tarayıcının localStorage alanında tut
 
 Hesapların çalışması için Firebase Authentication'da e-posta/şifre yöntemi, Cloud Firestore ve `firestore.rules` dosyasındaki güvenlik kuralları etkin olmalıdır. Google ile bağlama seçeneği için Authentication'da Google yöntemi ayrıca açılmalıdır. GitHub Pages alan adı Firebase Authentication yetkili alan adlarına eklenmelidir. `firebase-config.js` içindeki web yapılandırması Firebase projesinin halka açık istemci kimliğidir; veri erişimi güvenlik kurallarıyla sınırlandırılır.
 
+Geçici bakım: Firebase doğrulama e-postaları teslim edilmediği için yeni e-posta/şifre kaydı, doğrulama e-postası yeniden gönderme ve e-postayla şifre sıfırlama arayüzde kapalıdır. Google ile giriş ve mevcut doğrulanmış hesapların şifreyle girişi açık kalır. Sorun çözüldüğünde `cloud.js` içindeki `emailDeliveryMaintenance` bayrağını kapatıp akışları yeniden test edin.
+
 ## Görsel kaynaklar
 
 Kart resimleri Pamela Colman Smith'in Arthur Edward Waite yönlendirmesiyle çizdiği, 1909'da yayımlanan özgün Rider–Waite–Smith destesinin taramalarıdır. Dosyalar [TarotCards açık koleksiyonunun 720px dizininden](https://github.com/mixvlad/TarotCards/tree/main/tarot/rider-waite/720px) alınmıştır. Koleksiyonun [kaynak metaverisi](https://github.com/mixvlad/TarotCards/blob/main/tarot/rider-waite/metadata.json) bu taramaları kamu malı olarak tanımlar. Modern yeniden renklendirilmiş sürümler kullanılmamıştır.

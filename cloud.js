@@ -4,7 +4,9 @@ import { getFirestore, collection, doc, getDocs, getDoc, setDoc, writeBatch } fr
 
 const config = window.AY_FIREBASE_CONFIG;
 const actionSettings = { url: 'https://ssuheyyo.github.io/ay-atlasi/' };
+const emailDeliveryMaintenance = true;
 const cloud = { status: config?.apiKey && config?.projectId ? 'loading' : 'unconfigured', user: null, error: '', message };
+cloud.emailDeliveryMaintenance = emailDeliveryMaintenance;
 window.AyCloud = cloud;
 let auth, db, activeUid = null, muted = false, syncing = null, dirtyWhileMuted = false;
 function update(status, error = '') { cloud.status = status; cloud.error = error; window.refreshAyState?.(); }
@@ -88,6 +90,7 @@ async function syncNow() {
 }
 cloud.syncNow = syncNow;
 cloud.signup = async (email, password, name) => {
+  if (emailDeliveryMaintenance) throw Error('E-posta ile yeni hesap açma geçici bakımda. Google ile devam edebilirsin.');
   const result = await createUserWithEmailAndPassword(auth, email.trim(), password);
   if (name?.trim()) await updateProfile(result.user, { displayName: name.trim().slice(0, 40) });
   await sendEmailVerification(result.user, actionSettings);
@@ -101,9 +104,13 @@ cloud.loginWithGoogle = async () => {
   cloud.user = result.user;
   await syncNow();
 };
-cloud.resetPassword = async email => { await sendPasswordResetEmail(auth, email.trim(), actionSettings); };
+cloud.resetPassword = async email => {
+  if (emailDeliveryMaintenance) throw Error('E-posta gönderimi geçici bakımda. Şifre sıfırlama şu anda kullanılamıyor.');
+  await sendPasswordResetEmail(auth, email.trim(), actionSettings);
+};
 let lastVerificationSent = 0;
 cloud.resendVerification = async () => {
+  if (emailDeliveryMaintenance) throw Error('Doğrulama e-postası gönderimi geçici bakımda.');
   if (!auth.currentUser) throw Error('Önce giriş yap.');
   if (Date.now() - lastVerificationSent < 60_000) throw Error('Doğrulama isteği yeni gönderildi. Bir dakika sonra tekrar deneyebilirsin.');
   await sendEmailVerification(auth.currentUser, actionSettings);
